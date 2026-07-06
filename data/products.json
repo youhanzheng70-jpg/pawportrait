@@ -1,0 +1,47 @@
+[
+  {
+    "id": "mug",
+    "name": "Mug",
+    "rationale": "Classic gift item with mature printing process.",
+    "price": 79,
+    "factoryCost": "RMB 15-22",
+    "margin": "~72%",
+    "active": true
+  },
+  {
+    "id": "tshirt",
+    "name": "T-shirt",
+    "rationale": "Strong personal expression and higher order value.",
+    "price": 99,
+    "factoryCost": "RMB 22-35",
+    "margin": "~73%",
+    "active": true
+  },
+  {
+    "id": "magnet",
+    "name": "Fridge Magnet",
+    "rationale": "Low-price entry product for impulse purchase.",
+    "price": 39,
+    "factoryCost": "RMB 5-10",
+    "margin": "~74%",
+    "active": true
+  },
+  {
+    "id": "tote",
+    "name": "Canvas Tote Bag",
+    "rationale": "Practical everyday bag for custom pet artwork.",
+    "price": 49,
+    "factoryCost": "RMB 14-22",
+    "margin": "~65%",
+    "active": true
+  },
+  {
+    "id": "keychain",
+    "name": "Keychain / Charm",
+    "rationale": "Everyday carry add-on with emotional value.",
+    "price": 49,
+    "factoryCost": "RMB 10-15",
+    "margin": "~76%",
+    "active": true
+  }
+]

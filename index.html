@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PawPortrait Prototype</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="PawPortrait home">
+        <span class="brand-mark">PP</span>
+        <span>PawPortrait</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#create">Create</a>
+      </nav>
+      <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <span aria-hidden="true">◐</span>
+      </button>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-copy">
+          <p class="eyebrow">AI-powered pet merchandise customisation</p>
+          <h1>Turn one pet photo into a finished gift in minutes.</h1>
+          <p class="hero-text">
+            PawPortrait helps urban pet owners generate polished pet artwork, preview it on real products,
+            and place made-to-order personalised merchandise.
+          </p>
+          <div class="hero-actions">
+            <a class="primary-button" href="#create">Start prototype</a>
+          </div>
+          <dl class="hero-metrics" aria-label="Business highlights">
+            <div>
+              <dt>5</dt>
+              <dd>MVP SKUs</dd>
+            </div>
+            <div>
+              <dt>30-60s</dt>
+              <dd>AI generation target</dd>
+            </div>
+            <div>
+              <dt>7-12d</dt>
+              <dd>Delivery target</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="hero-visual hero-image-card" aria-label="Product preview mockup">
+          <img src="assets/hero-main.png" alt="Custom pet products hero visual" />
+        </div>
+      </section>
+
+      <section class="workflow" id="create" aria-labelledby="createTitle">
+        <div class="section-heading">
+          <p class="eyebrow">Interactive prototype</p>
+          <h2 id="createTitle">Create a custom order</h2>
+          <p>This front-end simulates the exact MVP flow the final platform can connect to later.</p>
+        </div>
+
+        <div class="builder-layout">
+          <aside class="steps" aria-label="Creation steps">
+            <button class="step is-active" type="button" data-step="upload">
+              <span>1</span>
+              Upload photo
+            </button>
+            <button class="step" type="button" data-step="style">
+              <span>2</span>
+              Choose style
+            </button>
+            <button class="step" type="button" data-step="product">
+              <span>3</span>
+              Pick product
+            </button>
+            <button class="step" type="button" data-step="checkout">
+              <span>4</span>
+              Download &amp; order
+            </button>
+          </aside>
+
+          <div class="builder-panel">
+            <div class="upload-zone">
+              <div class="upload-row">
+                <label for="petUpload" class="upload-label">
+                  <span class="upload-icon" aria-hidden="true">+</span>
+                  <span>
+                    <strong>Upload pet photo</strong>
+                    <span id="uploadStatusText">JPG or PNG, clear face recommended</span>
+                  </span>
+                  <span class="upload-complete-badge" id="uploadCompleteBadge">Completed</span>
+                </label>
+                <div class="source-photo-card">
+                  <span class="summary-label">Original photo</span>
+                  <div class="source-photo-preview has-sample" id="sourcePhotoPreview">
+                    <div class="mini-pet" aria-hidden="true">
+                      <span class="mini-ear left"></span>
+                      <span class="mini-ear right"></span>
+                      <span class="mini-eye left"></span>
+                      <span class="mini-eye right"></span>
+                      <span class="mini-nose"></span>
+                    </div>
+                  </div>
+                </div>
+                <input id="petUpload" type="file" accept="image/*" />
+              </div>
+              <p id="qualityMessage" class="quality-message">Demo mode: upload is optional; a sample pet image is already loaded.</p>
+            </div>
+
+            <div class="choice-group" aria-labelledby="styleTitle">
+              <div class="group-heading">
+                <h3 id="styleTitle">Art style</h3>
+                <div class="heading-actions">
+                  <span id="styleStatus">Cartoon / Chibi selected</span>
+                </div>
+              </div>
+              <div class="option-grid" id="styleOptions"></div>
+            </div>
+
+            <div class="choice-group" aria-labelledby="productTitle">
+              <div class="group-heading">
+                <h3 id="productTitle">Product</h3>
+                <span id="productStatus">Mug selected</span>
+              </div>
+              <div class="option-grid product-grid" id="productOptions"></div>
+            </div>
+
+            <div class="choice-group generation-section" aria-labelledby="generationTitle">
+              <div class="creation-workflow-header">
+                <div class="mini-stepper" aria-label="Artwork workflow progress">
+                  <span class="mini-step is-active" id="miniStepArtwork">1 AI Artwork</span>
+                  <span class="mini-line"></span>
+                  <span class="mini-step" id="miniStepMockup">2 Product Mockup</span>
+                  <span class="mini-line"></span>
+                  <span class="mini-step" id="miniStepDownload">3 Download &amp; Order</span>
+                </div>
+                <p id="workflowContext">Choose a style and product, then generate your artwork.</p>
+              </div>
+              <div class="generation-action">
+                <button class="primary-button" id="generateArtwork" type="button">Generate AI Artwork</button>
+              </div>
+              <div class="workflow-card artwork-result" id="artworkResult" data-state="idle">
+                <div class="workflow-card-head">
+                  <h3 id="generationTitle">AI Artwork</h3>
+                  <span id="artworkCardMeta">Cartoon / Chibi</span>
+                </div>
+                <div class="workflow-card-body">
+                  <div class="result-frame">
+                    <div class="result-art" id="resultArt">
+                      <div class="mini-pet" aria-hidden="true">
+                        <span class="mini-ear left"></span>
+                        <span class="mini-ear right"></span>
+                        <span class="mini-eye left"></span>
+                        <span class="mini-eye right"></span>
+                        <span class="mini-nose"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="workflow-card-copy">
+                  <strong id="artworkResultTitle">Waiting for generation</strong>
+                  <p id="artworkResultText">This frame will show the generated pet artwork before it is applied to a product mockup.</p>
+                    <div class="workflow-card-actions">
+                      <button class="action-secondary-button" id="regenerateArtwork" type="button" hidden>Regenerate artwork</button>
+                      <a class="action-secondary-button is-disabled" id="downloadArtwork" href="#" download="pawportrait-artwork.png" aria-disabled="true">Download artwork</a>
+                      <button class="sticker-customize-button" id="customizeArtwork" type="button" hidden>Customize with stickers</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ai-status" id="aiStatus" data-state="idle">
+                <span class="summary-label">AI generation</span>
+                <strong id="aiStatusTitle">Ready to generate</strong>
+                <p id="aiStatusText">Choose an art style and product, then click generate to simulate an OpenAI Images API request.</p>
+                <div class="generation-progress" aria-hidden="true">
+                  <span></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="choice-group sticker-editor-section" id="stickerEditorSection" hidden aria-labelledby="stickerEditorTitle">
+              <div class="workflow-card sticker-editor-card" data-state="active">
+                <div class="workflow-card-head">
+                  <h3 id="stickerEditorTitle">Customize with stickers</h3>
+                  <span id="stickerEditorMeta">Optional DIY step</span>
+                </div>
+                <div class="sticker-editor-layout">
+                  <aside class="sticker-library" aria-label="Sticker library">
+                    <span class="summary-label">Sticker library</span>
+                    <div class="sticker-category-tabs" id="stickerCategoryTabs"></div>
+                    <div class="sticker-grid" id="stickerGrid"></div>
+                  </aside>
+                  <div class="sticker-canvas-panel">
+                    <div class="sticker-canvas-wrap">
+                      <canvas id="stickerCanvas" width="768" height="768" aria-label="Sticker editing canvas"></canvas>
+                    </div>
+                    <p id="stickerEditorStatus">Your AI artwork is locked as the background layer.</p>
+                  </div>
+                  <aside class="sticker-controls" aria-label="Sticker controls">
+                    <span class="summary-label">Selected sticker</span>
+                    <button class="editor-control-button" id="duplicateSticker" type="button">Duplicate</button>
+                    <button class="editor-control-button" id="deleteSticker" type="button">Delete</button>
+                    <span class="summary-label">Layers</span>
+                    <button class="editor-control-button" id="bringStickerForward" type="button">Bring forward</button>
+                    <button class="editor-control-button" id="sendStickerBackward" type="button">Send backward</button>
+                    <span class="summary-label">History</span>
+                    <div class="editor-control-row">
+                      <button class="editor-control-button" id="undoSticker" type="button">Undo</button>
+                      <button class="editor-control-button" id="redoSticker" type="button">Redo</button>
+                    </div>
+                    <button class="editor-control-button" id="resetStickers" type="button">Reset stickers</button>
+                    <button class="primary-button wide" id="saveCustomization" type="button">Save customization</button>
+                    <button class="secondary-button wide" id="cancelCustomization" type="button">Cancel</button>
+                  </aside>
+                </div>
+              </div>
+            </div>
+
+            <div class="choice-group product-preview-section" id="productPreviewSection" hidden>
+              <div class="workflow-card product-mockup-card" id="productMockupCard" data-state="pending">
+                <div class="workflow-card-head">
+                  <h3>Product Preview</h3>
+                  <span id="productCardMeta">Mug</span>
+                </div>
+                <div class="workflow-card-body product-mockup-body">
+                  <div class="product-mockup-media" id="productMockupPlaceholder">
+                    <img id="finalMockupImage" src="" alt="Generated product mockup" hidden />
+                    <span id="mockupPlaceholderText">Generate your product mockup to preview the final design.</span>
+                  </div>
+                  <div class="workflow-card-copy">
+                  <strong id="mockupActionTitle">Ready for product mockup</strong>
+                  <p id="mockupActionText">Generate a realistic product image using the artwork and selected blank product photo.</p>
+                    <div class="workflow-card-actions">
+                      <button class="action-secondary-button" id="generateProductMockup" type="button">Generate Product Mockup</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="final-download-card" id="finalDownloadCard" data-state="pending" hidden>
+                <div>
+                  <span class="summary-label">Ready to order</span>
+                  <strong id="finalDownloadTitle">Download & order</strong>
+                  <p id="finalDownloadText">Your high-resolution product preview will appear here after the product mockup is generated.</p>
+                  <dl class="final-summary">
+                    <div>
+                      <dt>Style</dt>
+                      <dd id="finalSummaryStyle">Cartoon / Chibi</dd>
+                    </div>
+                    <div>
+                      <dt>Product</dt>
+                      <dd id="finalSummaryProduct">Mug</dd>
+                    </div>
+                    <div>
+                      <dt>Reference price</dt>
+                      <dd id="finalSummaryPrice">RMB 79</dd>
+                    </div>
+                  </dl>
+                  <a class="primary-button wide is-disabled" id="downloadMockup" href="#" download="pawportrait-product-mockup.png" aria-disabled="true">Download final image</a>
+                  <a class="secondary-button wide" href="https://www.xiaohongshu.com/" target="_blank" rel="noreferrer">Continue to Xiaohongshu shop</a>
+                  <button class="text-button" id="startNewOrder" type="button">Start another design</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p id="orderMessage" class="order-message builder-message" role="status"></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>PawPortrait prototype for graduation project presentation.</p>
+      <a href="#home">Back to top</a>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/fabric@5.3.0/dist/fabric.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

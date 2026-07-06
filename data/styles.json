@@ -1,0 +1,30 @@
+[
+  {
+    "id": "cartoon",
+    "name": "Cartoon / Chibi",
+    "description": "Cute features, bold outlines, bright colours.",
+    "bestFor": "Phone cases, magnets, mugs",
+    "prompt": "Turn the pet into a polished premium kawaii character illustration. Keep the pet's recognizable features, fur color, ear shape, and pose. Cute chibi proportion: slightly oversized head, small rounded body, short paws, soft fluffy silhouette. Clean smooth vector-style line art with thin dark-brown outlines, not thick black outlines. Warm pastel color palette, soft caramel brown fur, subtle blush shading, gentle cream highlights. Large glossy dark eyes with tiny light reflections, small simple nose and mouth, sweet gentle expression. High-end stationery / Japanese character goods illustration style. Centered composition, full body, clean transparent or cream background. Smooth edges, balanced anatomy, clear silhouette, cute but not childish. Avoid: thick black outlines, uneven coloring, distorted limbs, awkward paws, aggressive expression, cheap clip-art look, messy sketch lines, overly realistic fur, text, shadows, accessories."
+  },
+  {
+    "id": "realistic",
+    "name": "Original-Based Design",
+    "description": "Keeps the pet realistic with cleaner colour and background removal.",
+    "bestFor": "Tote bags, keychains, magnets",
+    "prompt": "Clean up this pet photo, remove distractions, enhance color and detail, and keep the pet realistic."
+  },
+  {
+    "id": "line",
+    "name": "Sketch / Line Art",
+    "description": "Minimal black-and-white illustration for a polished gift feel.",
+    "bestFor": "Tote bags, mugs, standees",
+    "prompt": "Turn this pet photo into clean black-and-white line art suitable for printing on merchandise."
+  },
+  {
+    "id": "oil",
+    "name": "Oil Painting",
+    "description": "Premium portrait look with richer texture and dramatic lighting.",
+    "bestFor": "Framed prints, T-shirts, mugs",
+    "prompt": "Turn this pet photo into a classic oil painting pet portrait with rich texture and warm lighting."
+  }
+]
