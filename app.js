@@ -313,7 +313,7 @@ function resetUploadFlow() {
   sourcePhotoPreview.classList.remove("has-upload");
   sourcePhotoPreview.classList.add("has-sample");
   document.querySelector("#qualityMessage").textContent =
-    "Demo mode: upload is optional; a sample pet image is already loaded.";
+    "A sample photo is shown until you upload your own.";
 }
 
 function startNewOrder() {
@@ -711,7 +711,7 @@ function resetGeneratedArtwork() {
   artworkResultText.textContent = "This artwork will be applied to your selected product.";
   aiStatus.dataset.state = "idle";
   aiStatusTitle.textContent = "Ready to generate";
-  aiStatusText.textContent = `Selected prompt: ${selectedStyle.name}. Click generate to simulate an OpenAI Images API request.`;
+  aiStatusText.textContent = `Selected style: ${selectedStyle.name}. Generate your pet artwork when ready.`;
   generateArtworkButton.disabled = false;
   generateArtworkButton.textContent = "Generate AI Artwork";
   appState.artworkId = null;
@@ -998,7 +998,7 @@ async function initializeApp() {
     appState.productId = products[0]?.id || appState.productId;
     appState.styleId = styles[0]?.id || appState.styleId;
   } catch (error) {
-    setOrderMessage(`Using local prototype data. Backend unavailable: ${error.message}`, "error");
+    setOrderMessage(`Product and style options loaded locally. Image services are temporarily unavailable: ${error.message}`, "error");
   }
 
   renderStyleOptions();

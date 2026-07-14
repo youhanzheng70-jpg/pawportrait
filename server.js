@@ -70,7 +70,6 @@ async function ensureStorage() {
   await fs.mkdir(DATA_DIR, { recursive: true });
   await fs.mkdir(ORIGINAL_UPLOAD_DIR, { recursive: true });
   await fs.mkdir(GENERATED_UPLOAD_DIR, { recursive: true });
-  await ensureJsonFile("orders.json", []);
   await ensureJsonFile("artworks.json", []);
   await ensureJsonFile("customizations.json", []);
 }
@@ -435,123 +434,6 @@ app.post("/api/product-mockups/generate", async (req, res, next) => {
       model: generationResult.model,
       status: generationResult.status,
       createdAt: new Date().toISOString()
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
-app.post("/api/orders", async (req, res, next) => {
-  try {
-    const {
-      customerName,
-      phone,
-      address,
-      note = "",
-      productId,
-      styleId,
-      petPhotoUrl,
-      artworkId,
-      generatedArtworkUrl
-    } = req.body;
-
-    if (!customerName || !phone || !address || !productId || !styleId) {
-      res.status(400).json({
-        error: "customerName, phone, address, productId, and styleId are required."
-      });
-      return;
-    }
-
-    const products = await readJson("products.json");
-    const styles = await readJson("styles.json");
-    const product = products.find((item) => item.id === productId);
-    const style = styles.find((item) => item.id === styleId);
-
-    if (!product || !style) {
-      res.status(400).json({ error: "Invalid productId or styleId." });
-      return;
-    }
-
-    const orders = await readJson("orders.json");
-    const now = new Date().toISOString();
-    const order = {
-      orderId: createId("PP"),
-      customerName,
-      phone,
-      address,
-      note,
-      productId,
-      productName: product.name,
-      styleId,
-      styleName: style.name,
-      petPhotoUrl: petPhotoUrl || null,
-      artworkId: artworkId || null,
-      generatedArtworkUrl: generatedArtworkUrl || null,
-      price: product.price,
-      donationAmount: 0.5,
-      paymentStatus: "pending_demo_payment",
-      productionStatus: "pending_supplier",
-      shippingStatus: "not_shipped",
-      trackingNumber: "",
-      createdAt: now,
-      updatedAt: now
-    };
-
-    orders.unshift(order);
-    await writeJson("orders.json", orders);
-    res.status(201).json(order);
-  } catch (error) {
-    next(error);
-  }
-});
-
-app.get("/api/orders/:orderId", async (req, res, next) => {
-  try {
-    const orders = await readJson("orders.json");
-    const order = orders.find((item) => item.orderId === req.params.orderId);
-    if (!order) {
-      res.status(404).json({ error: "Order not found." });
-      return;
-    }
-    res.json(order);
-  } catch (error) {
-    next(error);
-  }
-});
-
-app.post("/api/orders/:orderId/simulate-payment", async (req, res, next) => {
-  try {
-    const orders = await readJson("orders.json");
-    const order = orders.find((item) => item.orderId === req.params.orderId);
-    if (!order) {
-      res.status(404).json({ error: "Order not found." });
-      return;
-    }
-
-    order.paymentStatus = "paid_demo";
-    order.paidAt = new Date().toISOString();
-    order.updatedAt = order.paidAt;
-    await writeJson("orders.json", orders);
-    res.json(order);
-  } catch (error) {
-    next(error);
-  }
-});
-
-app.get("/api/impact", async (req, res, next) => {
-  try {
-    const orders = await readJson("orders.json");
-    const now = new Date();
-    const monthKey = now.toISOString().slice(0, 7);
-    const paidOrders = orders.filter(
-      (order) => order.paymentStatus === "paid_demo" && order.createdAt.startsWith(monthKey)
-    );
-    const monthlyDonation = paidOrders.reduce((sum, order) => sum + Number(order.donationAmount || 0), 0);
-
-    res.json({
-      monthlyOrders: paidOrders.length,
-      monthlyDonation,
-      rescuesSupported: Math.max(0, Math.floor(monthlyDonation / 8))
     });
   } catch (error) {
     next(error);

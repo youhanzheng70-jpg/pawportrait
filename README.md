@@ -1,25 +1,25 @@
-# PawPortrait Website Prototype
+# PawPortrait
 
-Static front-end prototype for the May 1 graduation project submission.
+PawPortrait is an online custom pet artwork and product preview platform. Users upload a pet photo, choose an art style and product, optionally customize the artwork with stickers, generate a product mockup, and download the finished image before continuing to the PawPortrait Xiaohongshu shop.
 
-Open `index.html` in a browser to present the demo.
+## Current Experience
 
-## What It Shows
+- Pet photo upload with an original-photo preview.
+- Four AI art styles backed by reusable prompt templates.
+- Five custom product options with reference prices.
+- Downloadable AI artwork and optional sticker customization.
+- A separate product-mockup generation stage.
+- Final image download and handoff to the Xiaohongshu shop.
 
-- Brand and business concept for PawPortrait.
-- Four-step user flow: upload pet photo, choose AI style, choose product, confirm demo order.
-- MVP product catalogue with pricing and margin logic from the proposal.
-- Caring Paw Print charity impact section.
-- Backend roadmap and feasible database/API plan in `BACKEND_PLAN.md`.
+## Project Files
 
-## Files
+- `index.html`: customer-facing page structure.
+- `styles.css`: responsive visual system and mobile layouts.
+- `app.js`: front-end state and interaction flow.
+- `server.js`: Express API for uploads, artwork generation, customization, and product mockups.
+- `data/`: product, style, artwork, and customization records.
 
-- `index.html`: page structure and prototype sections.
-- `styles.css`: responsive visual design and product mockups.
-- `app.js`: front-end state, mock product/style data, upload preview, demo order logic.
-- `BACKEND_PLAN.md`: realistic next-step backend structure for the team.
-
-## Local Backend
+## Run Locally
 
 Install dependencies:
 
@@ -27,13 +27,13 @@ Install dependencies:
 npm install
 ```
 
-Start the Express backend:
+Start the Express server:
 
 ```bash
 npm start
 ```
 
-Open the site through the backend:
+Open:
 
 ```text
 http://localhost:3000

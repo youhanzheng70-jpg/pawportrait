@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PawPortrait Prototype</title>
+    <title>PawPortrait | Custom Pet Art</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -30,12 +30,12 @@
             and place made-to-order personalised merchandise.
           </p>
           <div class="hero-actions">
-            <a class="primary-button" href="#create">Start prototype</a>
+            <a class="primary-button" href="#create">Start designing</a>
           </div>
           <dl class="hero-metrics" aria-label="Business highlights">
             <div>
               <dt>5</dt>
-              <dd>MVP SKUs</dd>
+              <dd>Custom products</dd>
             </div>
             <div>
               <dt>30-60s</dt>
@@ -54,9 +54,9 @@
 
       <section class="workflow" id="create" aria-labelledby="createTitle">
         <div class="section-heading">
-          <p class="eyebrow">Interactive prototype</p>
-          <h2 id="createTitle">Create a custom order</h2>
-          <p>This front-end simulates the exact MVP flow the final platform can connect to later.</p>
+          <p class="eyebrow">Create your keepsake</p>
+          <h2 id="createTitle">Design your custom pet product</h2>
+          <p>Upload a pet photo, shape the artwork, preview your product, and download the finished design.</p>
         </div>
 
         <div class="builder-layout">
@@ -104,7 +104,7 @@
                 </div>
                 <input id="petUpload" type="file" accept="image/*" />
               </div>
-              <p id="qualityMessage" class="quality-message">Demo mode: upload is optional; a sample pet image is already loaded.</p>
+              <p id="qualityMessage" class="quality-message">A sample photo is shown until you upload your own.</p>
             </div>
 
             <div class="choice-group" aria-labelledby="styleTitle">
@@ -170,7 +170,7 @@
               <div class="ai-status" id="aiStatus" data-state="idle">
                 <span class="summary-label">AI generation</span>
                 <strong id="aiStatusTitle">Ready to generate</strong>
-                <p id="aiStatusText">Choose an art style and product, then click generate to simulate an OpenAI Images API request.</p>
+                <p id="aiStatusText">Choose an art style and product, then generate your pet artwork.</p>
                 <div class="generation-progress" aria-hidden="true">
                   <span></span>
                 </div>
@@ -268,7 +268,7 @@
     </main>
 
     <footer class="footer">
-      <p>PawPortrait prototype for graduation project presentation.</p>
+      <p>Custom pet artwork and product previews, made by you.</p>
       <a href="#home">Back to top</a>
     </footer>
 

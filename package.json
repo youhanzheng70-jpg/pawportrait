@@ -1,8 +1,8 @@
 {
-  "name": "pawportrait-prototype",
+  "name": "pawportrait-platform",
   "version": "0.1.0",
   "private": true,
-  "description": "PawPortrait frontend prototype with a lightweight Express backend.",
+  "description": "PawPortrait custom pet artwork and product preview platform.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
