@@ -4,3 +4,14 @@ node_modules/
 uploads/
 data/*.local.json
 npm-debug.log*
+
+# Local report review and design-flow working files
+Project23_annotated.docx
+annotate_project23.py
+qa_project23/
+pawportrait-two-stage-generation-preview.svg
+pawportrait-two-stage-generation.excalidraw
+pawportrait-two-stage-generation.png
+pawportrait-user-flow-preview.svg
+pawportrait-user-flow.excalidraw
+pawportrait-user-flow.png

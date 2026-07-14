@@ -801,11 +801,16 @@ async function generateMockArtwork() {
   } catch (error) {
     resultArt.classList.remove("is-generating");
     artworkResult.dataset.state = "idle";
+    artworkResultTitle.textContent = "Artwork generation failed";
+    artworkResultText.textContent = "Please check the photo and try generating the artwork again.";
     aiStatus.dataset.state = "idle";
+    aiStatusTitle.textContent = "Generation failed";
+    aiStatusText.textContent = "The image service could not process this request. You can try again.";
     generateArtworkButton.disabled = false;
     generateArtworkButton.textContent = "Generate AI Artwork";
     regenerateArtworkButton.disabled = false;
     regenerateArtworkButton.textContent = "Regenerate artwork";
+    workflowContext.textContent = "Artwork generation failed. Review the photo and try again.";
     setOrderMessage(`Artwork generation failed: ${error.message}`, "error");
   }
 }

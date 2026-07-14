@@ -2,10 +2,12 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const express = require("express");
 const fs = require("fs/promises");
+const convertHeic = require("heic-convert");
 const multer = require("multer");
 const OpenAI = require("openai");
 const { toFile } = require("openai/uploads");
 const path = require("path");
+const sharp = require("sharp");
 
 dotenv.config();
 
@@ -58,7 +60,9 @@ const upload = multer({
     fileSize: 8 * 1024 * 1024
   },
   fileFilter: (req, file, cb) => {
-    if (!file.mimetype.startsWith("image/")) {
+    const isImage = file.mimetype.startsWith("image/");
+    const isGenericMobileUpload = file.mimetype === "application/octet-stream";
+    if (!isImage && !isGenericMobileUpload) {
       cb(new Error("Only image uploads are allowed."));
       return;
     }
@@ -132,6 +136,55 @@ function getImageMimeType(filePath) {
   if (extension === ".png") return "image/png";
   if (extension === ".webp") return "image/webp";
   throw new Error("Unsupported image format. Please upload a JPG, PNG, or WEBP file.");
+}
+
+async function convertImageToStandardPng(input) {
+  return sharp(input, {
+    failOn: "error",
+    limitInputPixels: 40_000_000
+  })
+    .rotate()
+    .resize({
+      width: 2048,
+      height: 2048,
+      fit: "inside",
+      withoutEnlargement: true
+    })
+    .flatten({ background: "#ffffff" })
+    .toColorspace("srgb")
+    .png({ compressionLevel: 9 })
+    .toBuffer();
+}
+
+async function normalizePetPhoto(sourcePath, destinationPath, uploadMetadata = {}) {
+  try {
+    let normalizedBuffer;
+    try {
+      normalizedBuffer = await convertImageToStandardPng(sourcePath);
+    } catch (originalError) {
+      const originalName = uploadMetadata.originalName || "";
+      const mimeType = uploadMetadata.mimeType || "";
+      const isHeic = /\.(heic|heif)$/i.test(originalName) || /^image\/hei[cf]$/i.test(mimeType);
+      if (!isHeic) throw originalError;
+
+      const heicBuffer = await fs.readFile(sourcePath);
+      const jpegBuffer = await convertHeic({
+        buffer: heicBuffer,
+        format: "JPEG",
+        quality: 0.92
+      });
+      normalizedBuffer = await convertImageToStandardPng(jpegBuffer);
+    }
+
+    await fs.writeFile(destinationPath, normalizedBuffer);
+  } catch (error) {
+    const uploadError = new Error(
+      "This photo could not be read. Please choose a JPG, PNG, WEBP, HEIC, or HEIF image and try again."
+    );
+    uploadError.statusCode = 400;
+    uploadError.cause = error;
+    throw uploadError;
+  }
 }
 
 function parseImageDataUrl(dataUrl) {
@@ -270,22 +323,33 @@ app.get("/api/styles", async (req, res, next) => {
 });
 
 app.post("/api/uploads/pet-photo", upload.single("petPhoto"), async (req, res, next) => {
+  let finalPath;
   try {
     if (!req.file) {
       res.status(400).json({ error: "petPhoto file is required." });
       return;
     }
 
-    const extension = path.extname(req.file.originalname) || ".jpg";
-    const finalName = `${createId("pet")}${extension.toLowerCase()}`;
-    const finalPath = path.join(ORIGINAL_UPLOAD_DIR, finalName);
-    await fs.rename(req.file.path, finalPath);
+    const finalName = `${createId("pet")}.png`;
+    finalPath = path.join(ORIGINAL_UPLOAD_DIR, finalName);
+    await normalizePetPhoto(req.file.path, finalPath, {
+      originalName: req.file.originalname,
+      mimeType: req.file.mimetype
+    });
+    await fs.rm(req.file.path, { force: true });
 
     res.status(201).json({
       photoUrl: publicUploadUrl(finalPath),
-      originalName: req.file.originalname
+      originalName: req.file.originalname,
+      normalizedFormat: "image/png"
     });
   } catch (error) {
+    if (req.file?.path) {
+      await fs.rm(req.file.path, { force: true }).catch(() => {});
+    }
+    if (finalPath) {
+      await fs.rm(finalPath, { force: true }).catch(() => {});
+    }
     next(error);
   }
 });
@@ -446,7 +510,7 @@ app.get("*", (req, res) => {
 
 app.use((error, req, res, next) => {
   console.error(error);
-  res.status(500).json({
+  res.status(error.statusCode || 500).json({
     error: error.message || "Internal server error."
   });
 });
