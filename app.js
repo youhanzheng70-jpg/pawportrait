@@ -56,7 +56,7 @@ let products = [
     id: "tote",
     name: "Canvas Tote Bag",
     rationale: "Practical everyday bag for custom pet artwork.",
-    price: 49,
+    price: 69,
     cost: "RMB 14-22",
     margin: "~65%"
   },
